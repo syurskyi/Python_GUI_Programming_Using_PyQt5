@@ -20,25 +20,25 @@ class Window(QWidget):
 
     def ui(self):
         # ############################Scores####################
-        self.scoreComputerText = QLabel("Computer Score : ", self)
-        self.scoreComputerText.move(30, 20)
-        self.scoreComputerText.setFont(textFont)
-        self.scorePlayerText = QLabel("Your Score : ", self)
-        self.scorePlayerText.setFont(textFont)
-        self.scorePlayerText.move(330, 20)
+        self.score_computer_text = QLabel("Computer Score : ", self)
+        self.score_computer_text.move(30, 20)
+        self.score_computer_text.setFont(textFont)
+        self.score_player_text = QLabel("Your Score : ", self)
+        self.score_player_text.setFont(textFont)
+        self.score_player_text.move(330, 20)
 
         # #########################Images########################
-        self.imageComputer = QLabel(self)
-        self.imageComputer.setPixmap(QPixmap("images/rock.png"))
-        self.imageComputer.move(50, 100)
+        self.image_computer = QLabel(self)
+        self.image_computer.setPixmap(QPixmap("images/rock.png"))
+        self.image_computer.move(50, 100)
 
-        self.imagePlayer = QLabel(self)
-        self.imagePlayer.setPixmap(QPixmap("images/rock.png"))
-        self.imagePlayer.move(330, 100)
+        self.image_player = QLabel(self)
+        self.image_player.setPixmap(QPixmap("images/rock.png"))
+        self.image_player.move(330, 100)
 
-        self.imageGame=QLabel(self)
-        self.imageGame.setPixmap(QPixmap("images/game.png"))
-        self.imageGame.move(230, 160)
+        self.image_game = QLabel(self)
+        self.image_game.setPixmap(QPixmap("images/game.png"))
+        self.image_game.move(230, 160)
 
         # ###################Buttons######################
         btn_start = QPushButton("Start", self)
@@ -53,7 +53,7 @@ class Window(QWidget):
         # #########################Timer##################
 
         self.timer = QTimer(self)
-        self.timer.setInterval(180)
+        self.timer.setInterval(280)
         self.timer.timeout.connect(self.play_game)
 
         self.show()
@@ -62,75 +62,76 @@ class Window(QWidget):
         self.timer.start()
 
     def play_game(self):
-        self.rndComputer = randint(1, 3)
-        self.rndPlayer = randint(1, 3)
-        print(self.rndPlayer, self.rndComputer)
+        self.rnd_computer = randint(1, 3)
+        self.rnd_player = randint(1, 3)
+        print(self.rnd_player, self.rnd_computer)
 
-        if self.rndComputer == 1:
-            self.imageComputer.setPixmap(QPixmap("images/rock.png"))
-        elif self.rndComputer == 2:
-            self.imageComputer.setPixmap(QPixmap("images/paper.png"))
+        if self.rnd_computer == 1:
+            self.image_computer.setPixmap(QPixmap("images/rock.png"))
+        elif self.rnd_computer == 2:
+            self.image_computer.setPixmap(QPixmap("images/paper.png"))
         else:
-            self.imageComputer.setPixmap(QPixmap("images/scissors.png"))
+            self.image_computer.setPixmap(QPixmap("images/scissors.png"))
 
-        if self.rndPlayer == 1:
-            self.imagePlayer.setPixmap(QPixmap("images/rock.png"))
+        if self.rnd_player == 1:
+            self.image_player.setPixmap(QPixmap("images/rock.png"))
 
-        elif self.rndPlayer == 2:
-            self.imagePlayer.setPixmap(QPixmap("images/paper.png"))
+        elif self.rnd_player == 2:
+            self.image_player.setPixmap(QPixmap("images/paper.png"))
         else:
-            self.imagePlayer.setPixmap(QPixmap("images/scissors.png"))
+            self.image_player.setPixmap(QPixmap("images/scissors.png"))
 
     def stop(self):
         global computerScore
         global playerScore
         self.timer.stop()
 
-        if self.rndComputer == 1 and self.rndPlayer == 1:
+        if self.rnd_computer == 1 and self.rnd_player == 1:
             mbox = QMessageBox.information(self, "Information", "Draw Game")
 
-        elif self.rndComputer == 1 and self.rndPlayer == 2:
+        elif self.rnd_computer == 1 and self.rnd_player == 2:
             mbox = QMessageBox.information(self, "Information", "You Win")
             playerScore += 1
-            self.scorePlayerText.setText("Your Score:{}".format(playerScore))
-        elif self.rndComputer == 1 and self.rndPlayer == 3:
+            self.score_player_text.setText("Your Score:{}".format(playerScore))
+        elif self.rnd_computer == 1 and self.rnd_player == 3:
             mbox = QMessageBox.information(self, "Information", "Computer Wins")
             computerScore += 1
-            self.scoreComputerText.setText("Computer Score:{}".format(computerScore))
+            self.score_computer_text.setText("Computer Score:{}".format(computerScore))
 
-        elif self.rndComputer == 2 and self.rndPlayer == 1:
+        elif self.rnd_computer == 2 and self.rnd_player == 1:
             mbox = QMessageBox.information(self, "Information", "Computer Wins")
             computerScore += 1
-            self.scoreComputerText.setText("Computer Score:{}".format(computerScore))
-        elif self.rndComputer == 2 and self.rndPlayer == 2:
-            mbox = QMessageBox.information(self,"Information", "Draw Game")
+            self.score_computer_text.setText("Computer Score:{}".format(computerScore))
+        elif self.rnd_computer == 2 and self.rnd_player == 2:
+            mbox = QMessageBox.information(self, "Information", "Draw Game")
 
-        elif self.rndComputer == 2 and self.rndPlayer == 3:
+        elif self.rnd_computer == 2 and self.rnd_player == 3:
             mbox = QMessageBox.information(self, "Information", "You Win")
             playerScore += 1
-            self.scorePlayerText.setText("Your Score:{}".format(playerScore))
+            self.score_player_text.setText("Your Score:{}".format(playerScore))
 
-        elif self.rndComputer == 3 and self.rndPlayer == 1:
+        elif self.rnd_computer == 3 and self.rnd_player == 1:
             mbox = QMessageBox.information(self, "Information", "You Win")
             playerScore += 1
-            self.scorePlayerText.setText("Your Score:{}".format(playerScore))
-        elif self.rndComputer == 3 and self.rndPlayer == 2:
+            self.score_player_text.setText("Your Score:{}".format(playerScore))
+        elif self.rnd_computer == 3 and self.rnd_player == 2:
             mbox = QMessageBox.information(self, "Information", "Computer Wins")
             computerScore += 1
-            self.scoreComputerText.setText("Computer Score:{}".format(computerScore))
-        elif self.rndComputer == 3 and self.rndPlayer == 3:
+            self.score_computer_text.setText("Computer Score:{}".format(computerScore))
+        elif self.rnd_computer == 3 and self.rnd_player == 3:
             mbox = QMessageBox.information(self, "Information", "Draw Game")
 
         if computerScore == 3 or playerScore == 3:
-            mbox = QMessageBox.information(self,"Information", "Game Over")
+            mbox = QMessageBox.information(self, "Information", "Game Over")
             sys.exit()
 
 
 def main():
     app = QApplication(sys.argv)
     window = Window()
-    window.start()
+    # window.start()
     sys.exit(app.exec_())
+
 
 if __name__ == '__main__':
     main()
