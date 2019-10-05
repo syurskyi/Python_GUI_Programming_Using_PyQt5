@@ -22,6 +22,7 @@ class Main(QWidget):
     def ui(self):
         self.main_design()
         self.layouts()
+        self.getEmployees()
 
     def main_design(self):
         self.employee_list = QListWidget()
@@ -60,6 +61,13 @@ class Main(QWidget):
     def add_employee(self):
         self.new_employee = AddEmployer()
         self.close()
+
+    def getEmployees(self):
+        query = "SELECT id, name, surname FROM employees"
+        employees = cursor.execute(query).fetchall()
+        for employee in employees:
+            print(employee)
+            self.employee_list.addItem(str(employee[0]) + "-" + employee[1] + " " + employee[2])
 
 
 class AddEmployer(QWidget):
