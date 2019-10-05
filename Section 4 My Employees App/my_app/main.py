@@ -17,7 +17,7 @@ class Main(QWidget):
 
     def ui(self):
         self.main_design()
-        self.layout()
+        self.layouts()
 
     def main_design(self):
         self.employee_list = QListWidget()
@@ -26,7 +26,7 @@ class Main(QWidget):
         self.btn_update = QPushButton("Update")
         self.btn_delete = QPushButton("Delete")
 
-    def layout(self):
+    def layouts(self):
         # ###############################Layouts#####################################################################
 
         self.main_layout = QHBoxLayout()
@@ -57,6 +57,7 @@ class Main(QWidget):
         self.new_employee = AddEmployer()
         self.close()
 
+
 class AddEmployer(QWidget):
     def __init__(self):
         super().__init__()
@@ -66,7 +67,27 @@ class AddEmployer(QWidget):
         self.show()
 
     def ui(self):
+        self.main_design()
+        self.layouts()
+
+    def main_design(self):
         pass
+
+    def layouts(self):
+        # #########################creating main layout########################################################
+
+        self.main_layout = QVBoxLayout()
+        self.top_layout = QVBoxLayout()
+        self.bottom_layout = QFormLayout()
+
+        # #########################adding child layoutd to main layout#########################################
+
+        self.main_layout.addLayout(self.top_layout)
+        self.main_layout.addLayout((self.bottom_layout))
+
+        # #########################setting main layout for window##############################################
+        self.setLayout(self.main_layout)
+
 
 def main():
     APP = QApplication(sys.argv)
