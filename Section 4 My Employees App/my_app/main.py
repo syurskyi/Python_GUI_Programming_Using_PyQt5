@@ -74,6 +74,10 @@ class AddEmployer(QWidget):
         self.main_design()
         self.layouts()
 
+    def closeEvent(self, event):
+        self.main = Main()
+
+
     def main_design(self):
 
         # ##############Top Layout widgets#######################
@@ -172,10 +176,13 @@ class AddEmployer(QWidget):
                 cursor.execute(query, (name, surname, phone, email, image, address))
                 connection.commit()
                 QMessageBox.information(self, "Success", "Person has been added")
+                self.close()
+                self.main = Main()
             except:
                 QMessageBox.information(self, "Warning", "Person has not been added")
         else:
             QMessageBox.information(self, "Warning", "Fields can not be empty")
+
 
 def main():
     APP = QApplication(sys.argv)
