@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QPixmap, QFont
 import sys
+import os
 import sqlite3
 
 
@@ -72,13 +73,41 @@ class AddEmployer(QWidget):
         self.layouts()
 
     def main_design(self):
+
+        # ##############Top Layout widgets#######################
+
+        self.setStyleSheet("background-color:white;font-size:14pt;font-family:Times")
         self.title = QLabel("Add Person")
         self.title.setStyleSheet("font-size: 24pt; font-family; Arial Bold;")
         self.img_add = QLabel()
         self.img_add.setPixmap(QPixmap("icons/person.png"))
 
+        # ##################Bottom Layout Widgets#####################
+
+        self.name_lbl = QLabel("Name :")
+        self.name_entry = QLineEdit()
+        self.name_entry.setPlaceholderText("Enter Employee Name")
+        self.surname_lbl = QLabel("Surname :")
+        self.surname_entry = QLineEdit()
+        self.surname_entry.setPlaceholderText("Enter Employee Surname")
+        self.phone_lbl = QLabel("Phone :")
+        self.phone_entry = QLineEdit()
+        self.phone_entry.setPlaceholderText("Enter Employee Phone Number")
+        self.email_lbl = QLabel("Email :")
+        self.email_entry = QLineEdit()
+        self.email_entry.setPlaceholderText("Enter Employee Email")
+        self.img_lbl = QLabel("Picture: ")
+        self.img_button = QPushButton("Browse")
+        self.img_button.setStyleSheet("background-color:orange;font-size:10pt")
+        # self.img_button.clicked.connect(self.upload_image)
+        self.address_lbl = QLabel("Address: ")
+        self.address_editor = QTextEdit()
+        self.add_button = QPushButton("Add")
+        self.add_button.setStyleSheet("background-color:orange;font-size:10pt")
+        # self.add_button.clicked.connect(self.add_employee)
 
     def layouts(self):
+
         # #########################creating main layout########################################################
 
         self.main_layout = QVBoxLayout()
@@ -90,12 +119,24 @@ class AddEmployer(QWidget):
         self.main_layout.addLayout(self.top_layout)
         self.main_layout.addLayout((self.bottom_layout))
 
-        # #########################adding widget to layout####################################################
+        # #########################adding widget to layout#####################################################
+        # #########################top layout################
 
         self.top_layout.addStretch()
         self.top_layout.addWidget(self.title)
         self.top_layout.addWidget((self.img_add))
         self.top_layout.addStretch()
+        self.top_layout.setContentsMargins(110, 20, 10, 30)
+
+        # #########################bottom layout################
+
+        self.bottom_layout.addRow(self.name_lbl, self.name_entry)
+        self.bottom_layout.addRow(self.surname_lbl, self.surname_entry)
+        self.bottom_layout.addRow(self.phone_lbl, self.phone_entry)
+        self.bottom_layout.addRow(self.email_lbl, self.email_entry)
+        self.bottom_layout.addRow(self.img_lbl, self.img_button)
+        self.bottom_layout.addRow(self.address_lbl, self.address_editor)
+        self.bottom_layout.addRow("", self.add_button)
 
         # #########################setting main layout for window##############################################
 
