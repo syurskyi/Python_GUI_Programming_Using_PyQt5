@@ -11,11 +11,11 @@ class Window(QWidget):
 
     def UI(self):
         self.addRecord=QLineEdit(self)
-        self.addRecord.move(100,50)
+        self.addRecord.move(100, 50)
         self.listWidget=QListWidget(self)
         self.listWidget.move(100,80)
         ##################################################
-        list1=["Batman","Superman","Spiderman"]
+        list1=["Batman","Superman", "Spiderman"]
         self.listWidget.addItems(list1)
         self.listWidget.addItem("Heman")
 
