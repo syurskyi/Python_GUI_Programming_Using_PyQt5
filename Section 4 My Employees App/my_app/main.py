@@ -106,7 +106,7 @@ class AddEmployer(QWidget):
         self.address_editor = QTextEdit()
         self.add_button = QPushButton("Add")
         self.add_button.setStyleSheet("background-color:orange;font-size:10pt")
-        # self.add_button.clicked.connect(self.add_employee)
+        self.add_button.clicked.connect(self.add_employee)
 
     def layouts(self):
 
@@ -157,6 +157,25 @@ class AddEmployer(QWidget):
             image = image.resize(size)
             image.save("images/{}".format(default_image))
 
+    def add_employee(self):
+        global default_image
+        name = self.name_entry.text()
+        surname = self.surname_entry.text()
+        phone = self.phone_entry.text()
+        email = self.email_entry.text()
+        image = default_image
+        address = self.address_editor.toPlainText()
+
+        if (name and surname and phone != ""):
+            try:
+                query = "INSERT INTO employees(name, surname, phone, email, image, address) VALUES(?, ? , ? , ? , ? ,?)"
+                cursor.execute(query, (name, surname, phone, email, image, address))
+                connection.commit()
+                QMessageBox.information(self, "Success", "Person has been added")
+            except:
+                QMessageBox.information(self, "Warning", "Person has not been added")
+        else:
+            QMessageBox.information(self, "Warning", "Fields can not be empty")
 
 def main():
     APP = QApplication(sys.argv)
