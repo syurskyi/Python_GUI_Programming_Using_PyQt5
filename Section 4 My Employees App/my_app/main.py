@@ -22,9 +22,11 @@ class Main(QWidget):
     def ui(self):
         self.main_design()
         self.layouts()
-        self.getEmployees()
+        self.get_employees()
+        self.display_first_record()
 
     def main_design(self):
+        self.setStyleSheet("font-size:14pt; font-family:Arial Bold;")
         self.employee_list = QListWidget()
         self.btn_new = QPushButton("New")
         self.btn_new.clicked.connect(self.add_employee)
@@ -62,12 +64,31 @@ class Main(QWidget):
         self.new_employee = AddEmployer()
         self.close()
 
-    def getEmployees(self):
+    def get_employees(self):
         query = "SELECT id, name, surname FROM employees"
         employees = cursor.execute(query).fetchall()
         for employee in employees:
             print(employee)
             self.employee_list.addItem(str(employee[0]) + "-" + employee[1] + " " + employee[2])
+
+    def display_first_record(self):
+        query = "SELECT * FROM employees ORDER BY ROWID ASC LIMIT 1"
+        employee = cursor.execute(query).fetchone()
+        print(employee)
+        image = QLabel()
+        image.setPixmap(QPixmap("images/" + employee[5]))
+        name = QLabel(employee[1])
+        surname = QLabel(employee[2])
+        phone = QLabel(employee[3])
+        email = QLabel(employee[4])
+        address = QLabel(employee[6])
+        self.left_layout.setVerticalSpacing(20)
+        self.left_layout.addRow("", image)
+        self.left_layout.addRow("Name: ", name)
+        self.left_layout.addRow("Surname :", surname)
+        self.left_layout.addRow("Phone :", phone)
+        self.left_layout.addRow("Email :", email)
+        self.left_layout.addRow("Address:", address)
 
 
 class AddEmployer(QWidget):
@@ -84,7 +105,6 @@ class AddEmployer(QWidget):
 
     def closeEvent(self, event):
         self.main = Main()
-
 
     def main_design(self):
 
