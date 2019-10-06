@@ -9,7 +9,7 @@ from PIL import Image
 connection = sqlite3.connect('employees.db')
 cursor = connection.cursor()
 default_image = "person.png"
-
+person_id = None
 
 class Main(QWidget):
     def __init__(self):
@@ -32,6 +32,7 @@ class Main(QWidget):
         self.btn_new = QPushButton("New")
         self.btn_new.clicked.connect(self.add_employee)
         self.btn_update = QPushButton("Update")
+        self.btn_update.clicked.connect(self.update_employee)
         self.btn_delete = QPushButton("Delete")
         self.btn_delete.clicked.connect(self.delete_employee)
 
@@ -142,6 +143,150 @@ class Main(QWidget):
         else:
             QMessageBox.information(self, "Warning!!!", "Please select a person to delete")
 
+    def update_employee(self):
+        # pass
+        global person_id
+        if self.employee_list.selectedItems():
+            person = self.employee_list.currentItem().text()
+            person_id = person.split("-")[0]
+            self.update_window = UpdateEmployee()
+            self.close()
+
+        else:
+            QMessageBox.information(self, "Warning!!!"), "Please select a person to update"
+
+
+class UpdateEmployee(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Update Employee")
+        self.setGeometry(450, 150, 350, 600)
+        self.ui()
+        self.show()
+
+    def ui(self):
+        # pass
+        self.get_person()
+        self.main_design()
+        self.layouts()
+
+    def closeEvent(self, event):
+        # pass
+        self.main = Main()
+
+    def get_person(self):
+        pass
+        # global person_id
+        # query = "SELECT * FROM employees WHERE id = ?"
+        # employee = cursor.execute(query, (person_id,)).fetchone()
+        # print(employee)
+        #
+        # self.name = employee[1]
+        # self.surname = employee[2]
+        # self.phone = employee[3]
+        # self.email = employee[4]
+        # self.image = employee[5]
+        # self.address = employee[6]
+
+    def main_design(self):
+        # pass
+        # ###############Top Layout widgets#######################
+        self.setStyleSheet("background-color:white;font-size:14pt;font-family:Times")
+        self.title = QLabel("Update Person")
+        self.title.setStyleSheet('font-size: 24pt;font-family:Arial Bold;')
+        self.image_add = QLabel()
+        self.imgage_add.setPixmap(QPixmap("images/{}".format(self.image)))
+        # ##################Bottom Layout Widgets#####################
+        self.name_lbl = QLabel("Name :")
+        self.name_entry = QLineEdit()
+        self.name_entry.setText(self.name)
+        # self.surname_lbl = QLabel("Surname :")
+        # self.surname_entry = QLineEdit()
+        # self.surname_entry.setText(self.surname)
+        # self.phone_lbl = QLabel("Phone :")
+        # self.phoneentry = QLineEdit()
+        # self.phone_entry.setText(self.phone)
+        # self.email_lbl = QLabel("Email :")
+        # self.email_entry = QLineEdit()
+        # self.email_entry.setText(self.email)
+        # self.img_lbl = QLabel("Picture: ")
+        # self.img_button = QPushButton("Browse")
+        # self.img_button.setStyleSheet("background-color:orange;font-size:10pt")
+        # self.img_button.clicked.connect(self.upload_image)
+        # self.address_lbl = QLabel("Address: ")
+        # self.address_editor = QTextEdit()
+        # self.address_editor.setText(self.address)
+        # self.add_button = QPushButton("Update")
+        # self.add_button.setStyleSheet("background-color:orange;font-size:10pt")
+        # self.add_button.clicked.connect(self.update_employee)
+
+    def layouts(self):
+        # pass
+        # #################creating main layouts##########
+        self.main_layout = QVBoxLayout()
+        # self.top_layout = QVBoxLayout()
+        # self.bottom_layout = QFormLayout()
+
+        ##########adding child layouts to main layout##############
+        # self.main_layout.addLayout(self.top_layout)
+        # self.main_layout.addLayout(self.bottom_layout)
+
+        # #################adding wigdets to layouts##############
+        # #############top layout################
+        # self.top_layout.addStretch()
+        # self.top_layout.addWidget(self.title)
+        # self.top_layout.addWidget(self.image_add)
+        # self.top_layout.addStretch()
+        # self.top_layout.setContentsMargins(110, 20, 10, 30)  # left,top,right,bottom
+        # ##########bottom layout#################
+        # self.bottom_layout.addRow(self.name_lbl, self.name_entry)
+        # self.bottom_layout.addRow(self.surname_lbl, self.surname_entry)
+        # self.bottom_layout.addRow(self.phone_lbl, self.phone_entry)
+        # self.bottom_layout.addRow(self.email_lbl, self.email_entry)
+        # self.bottom_layout.addRow(self.img_lbl, self.image_button)
+        # self.bottom_layout.addRow(self.address_lbl, self.address_editor)
+        # self.bottom_layout.addRow("", self.add_button)
+
+        # ##########setting main layout for window##################
+        self.setLayout(self.main_layout)
+
+    def upload_image(self):
+        pass
+        # global default_image
+        # size = (128, 128)
+        # self.file_name, ok =QFileDialog.getOpenFileName(self, 'Upload Image', '', 'Image Files (*.jpg *.png)')
+        #
+        # if ok:
+        #
+        #     default_image = os.path.basename(self.file_name)
+        #     image = Image.open(self.file_name)
+        #     imgage = image.resize(size)
+        #     image.save("images/{}".format(default_image))
+
+    def update_employee(self):
+        pass
+        # global default_image
+        # global person_id
+        # name = self.name_entry.text()
+        # surname = self.surname_entry.text()
+        # phone = self.phone_entry.text()
+        # email = self.email_entry.text()
+        # img = default_image
+        # address = self.address_editor.toPlainText()
+        #
+        # if (name and surname and phone !=""):
+        #     try:
+        #         query = "UPDATE employees set name =?, surname=?, phone=?,email=?,img=?,address=? WHERE id=?"
+        #         cursor.execute(query, (name, surname, phone, email, img, address, person_id))
+        #         connection.commit()
+        #         QMessageBox.information(self, "Success", "Person has been updated")
+        #         self.close()
+        #         self.main = Main()
+        #     except:
+        #         QMessageBox.information(self, "Warning", "Person has not been updated")
+        #
+        # else:
+        #     QMessageBox.information(self, "Warning", "Fields can not be empty")
 
 
 class AddEmployer(QWidget):
