@@ -129,7 +129,6 @@ class Main(QWidget):
         else:
             QMessageBox.information(self, "Warning!!!", "Please select a person to delete")
 
-
     def updateEmployee(self):
         global person_id
         if self.employeeList.selectedItems():
