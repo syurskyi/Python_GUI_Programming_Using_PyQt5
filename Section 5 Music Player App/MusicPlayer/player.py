@@ -8,21 +8,19 @@ from mutagen.mp3 import MP3
 import style
 
 
-musicList=[]
+musicList = []
 mixer.init()
-muted=False
-count=0
-songLength=0
-index=0
-
-
+muted = False
+count = 0
+songLengt = 0
+index = 0
 
 
 class Player(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Music Player")
-        self.setGeometry(450,150,480,700)
+        self.setGeometry(450, 150, 480, 700)
         self.UI()
         self.show()
 
@@ -31,17 +29,17 @@ class Player(QWidget):
        self.layouts()
 
     def widgets(self):
-        ########################progress bar#############
-        self.progressBar=QProgressBar()
+        # #######################progress bar#############
+        self.progressBar = QProgressBar()
         self.progressBar.setTextVisible(False)
         self.progressBar.setStyleSheet(style.progressBarStyle())
-        ########################Labels###################
+        # #######################Labels###################
         self.songTimerLabel=QLabel("0:00")
         self.songLenthLabel=QLabel("/ 0:00")
-        #######################Buttons###################
+        # ######################Buttons###################
         self.addButton =QToolButton()
         self.addButton.setIcon(QIcon("icons/add.png"))
-        self.addButton.setIconSize(QSize(48,48))
+        self.addButton.setIconSize(QSize(48, 48))
         self.addButton.setToolTip("Add a Song")
         self.addButton.clicked.connect(self.addSound)
 
@@ -77,7 +75,7 @@ class Player(QWidget):
         self.muteButton.setToolTip("Mute")
         self.muteButton.clicked.connect(self.muteSound)
 
-        #####################Volume Slider#################
+        # ####################Volume Slider#################
         self.volumeSlider=QSlider(Qt.Horizontal)
         self.volumeSlider.setToolTip("Volume")
         self.volumeSlider.setValue(70)
@@ -86,20 +84,18 @@ class Player(QWidget):
         mixer.music.set_volume(0.7)
         self.volumeSlider.valueChanged.connect(self.setVolume)
 
-        ###################Play List####################
+        # ##################Play List####################
         self.playList=QListWidget()
         self.playList.doubleClicked.connect(self.playSounds)
         self.playList.setStyleSheet(style.playListStyle())
 
-        #####################Timer######################
+        # ####################Timer######################
         self.timer=QTimer()
         self.timer.setInterval(1000)
         self.timer.timeout.connect(self.updateProgressBar)
 
-
-
     def layouts(self):
-        #########################Creating Layouts#################
+        # ########################Creating Layouts#################
         self.mainLayout=QVBoxLayout()
         self.topMainLayout=QVBoxLayout()
         self.topGroupBox=QGroupBox("Music Player")
@@ -108,13 +104,13 @@ class Player(QWidget):
         self.middleLayout=QHBoxLayout()
         self.bottomLayout=QVBoxLayout()
 
-        ###################Adding Widgets#########################
-        ##################Top layout widgets######################
+        # ##################Adding Widgets#########################
+        # #################Top layout widgets######################
         self.topLayout.addWidget(self.progressBar)
         self.topLayout.addWidget(self.songTimerLabel)
         self.topLayout.addWidget(self.songLenthLabel)
 
-        ##################Middle layout Widget#################
+        # #################Middle layout Widget#################
         self.middleLayout.addStretch()
         self.middleLayout.addWidget(self.addButton)
         self.middleLayout.addWidget(self.shuffleButton)
@@ -125,20 +121,20 @@ class Player(QWidget):
         self.middleLayout.addWidget(self.muteButton)
         self.middleLayout.addStretch()
 
-        ###################Bottom layout widget#############
+        # ##################Bottom layout widget#############
         self.bottomLayout.addWidget(self.playList)
 
         self.topMainLayout.addLayout(self.topLayout)
         self.topMainLayout.addLayout(self.middleLayout)
         self.topGroupBox.setLayout(self.topMainLayout)
-        self.mainLayout.addWidget(self.topGroupBox,25)
-        self.mainLayout.addLayout(self.bottomLayout,75)
+        self.mainLayout.addWidget(self.topGroupBox, 25)
+        self.mainLayout.addLayout(self.bottomLayout, 75)
         self.setLayout(self.mainLayout)
 
     def addSound(self):
-        directory=QFileDialog.getOpenFileName(self,"Add Sound","","Sound Files (*.mp3 *.ogg *.wav)")
+        directory = QFileDialog.getOpenFileName(self, "Add Sound", "", "Sound Files (*.mp3 *.ogg *.wav)")
         # print(directory)
-        filename=os.path.basename(directory[0])
+        filename = os.path.basename(directory[0])
         # print(filename)
         self.playList.addItem(filename)
         musicList.append(directory[0])
@@ -148,27 +144,25 @@ class Player(QWidget):
         print(musicList)
         self.playList.clear()
         for song in musicList:
-            filename=os.path.basename(song)
+            filename = os.path.basename(song)
             self.playList.addItem(filename)
-
-
 
     def playSounds(self):
         global songLength
         global count
         global index
-        count=0
-        index=self.playList.currentRow()
+        count = 0
+        index = self.playList.currentRow()
 
         try:
             mixer.music.load(str(musicList[index]))
             mixer.music.play()
             self.timer.start()
-            sound=MP3(str(musicList[index]))
-            songLength=sound.info.length
-            songLength=round(songLength)
+            sound = MP3(str(musicList[index]))
+            songLength = sound.info.length
+            songLength = round(songLength)
             print(songLength)
-            min,sec=divmod(songLength,60)
+            min, sec = divmod(songLength, 60)
 
             self.songLenthLabel.setText("/ "+str(min)+":"+str(sec))
             self.progressBar.setValue(0)
@@ -182,11 +176,11 @@ class Player(QWidget):
         global count
         global index
         count = 0
-        items=self.playList.count()
+        items = self.playList.count()
 
         if index == 0:
              index = items
-        index -=1
+        index -= 1
 
         try:
             mixer.music.load(str(musicList[index]))
@@ -216,7 +210,6 @@ class Player(QWidget):
         if index == items:
             index = 0
 
-
         try:
             mixer.music.load(str(musicList[index]))
             mixer.music.play()
@@ -235,7 +228,7 @@ class Player(QWidget):
             pass
 
     def setVolume(self):
-        self.volume=self.volumeSlider.value()
+        self.volume = self.volumeSlider.value()
         # print(self.volume)
         mixer.music.set_volume(self.volume/100)
 
@@ -266,11 +259,11 @@ class Player(QWidget):
             self.timer.stop()
 
 
-
 def main():
-    App=QApplication(sys.argv)
-    window=Player()
+    App = QApplication(sys.argv)
+    window = Player()
     sys.exit(App.exec_())
+
 
 if __name__ == '__main__':
     main()

@@ -3,6 +3,9 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/Section 4 My Employees App/my_app/icons" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Section 5 Music Player App/MusicPlayer" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Section 6 Product Management App/Product Manager" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Section 5 Music Player App/MyMusicPlayer" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
