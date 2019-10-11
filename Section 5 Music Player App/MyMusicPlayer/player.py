@@ -56,6 +56,20 @@ class Player(QWidget):
         self.mute_button.setToolTip("Mute")
         # self.mute_button.clicked.connect(self.mute_sound)
 
+        # ####################Volume Slider#################
+        self.volume_slider = QSlider(Qt.Horizontal)
+        self.volume_slider.setToolTip("Volume")
+        self.volume_slider.setValue(70)
+        self.volume_slider.setMinimum(0)
+        self.volume_slider.setMaximum(100)
+        # mixer.music.set_volume(0.7)
+        # self.volumeSlider.valueChanged.connect(self.setVolume)
+
+        # ##################Play List####################
+        self.play_list = QListWidget()
+        # self.playList.doubleClicked.connect(self.playSounds)
+        # self.playList.setStyleSheet(style.playListStyle()
+
     def layouts(self):
         # ###################################Creating Layouts#######################################################
         self.main_layout = QVBoxLayout()
@@ -77,15 +91,18 @@ class Player(QWidget):
         self.middle_layout.addWidget(self.play_button)
         self.middle_layout.addWidget(self.previous_button)
         self.middle_layout.addWidget(self.next_button)
-        # self.middle_layout.addWidget(self.volume_slider)
+        self.middle_layout.addWidget(self.volume_slider)
         self.middle_layout.addWidget(self.mute_button)
         self.middle_layout.addStretch()
+
+        # ##################Bottom layout widget#############
+        self.bottom_layout.addWidget(self.play_list)
 
         self.top_main_layout.addLayout(self.top_layout)
         self.top_main_layout.addLayout(self.middle_layout)
         self.top_groupbox.setLayout(self.top_main_layout)
-        self.main_layout.addWidget(self.top_groupbox)
-        self.main_layout.addLayout(self.bottom_layout)
+        self.main_layout.addWidget(self.top_groupbox, 25)
+        self.main_layout.addLayout(self.bottom_layout, 75)
         self.setLayout(self.main_layout)
 
 
