@@ -69,8 +69,8 @@ class Player(QWidget):
         self.volume_slider.setValue(70)
         self.volume_slider.setMinimum(0)
         self.volume_slider.setMaximum(100)
-        # mixer.music.set_volume(0.7)
-        # self.volumeSlider.valueChanged.connect(self.setVolume)
+        mixer.music.set_volume(0.7)
+        self.volume_slider.valueChanged.connect(self.set_volume)
 
         # ##################Play List####################
         self.play_list = QListWidget()
@@ -139,6 +139,11 @@ class Player(QWidget):
 
         except:
             pass
+
+    def set_volume(self):
+        self.volume = self.volume_slider.value()
+        print(self.volume)
+        mixer.music.set_volume(self.volume/100)
 
 
 def main():
