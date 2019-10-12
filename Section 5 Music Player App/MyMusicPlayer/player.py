@@ -180,6 +180,9 @@ class Player(QWidget):
         global index
         count = 0
         items = self.play_list.count()
+        print(index, 'first value')
+        index -= 1
+        print(index, 'second value')
 
         if index == 0:
             index = items
