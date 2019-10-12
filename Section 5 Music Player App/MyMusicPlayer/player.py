@@ -4,7 +4,7 @@ import random
 import time
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import QSize,Qt,QTimer
+from PyQt5.QtCore import QSize, Qt, QTimer
 from pygame import mixer
 from mutagen.mp3 import MP3
 
@@ -260,7 +260,6 @@ class Player(QWidget):
         self.song_timer_label.setText(time.strftime("%M:%S", time.gmtime(count)))
         if count == song_length:
             self.timer.stop()
-
 
 
 def main():
