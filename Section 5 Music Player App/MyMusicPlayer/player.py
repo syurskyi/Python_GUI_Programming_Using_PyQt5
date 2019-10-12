@@ -9,6 +9,7 @@ from pygame import mixer
 
 music_list = []
 mixer.init()
+muted = False
 
 
 class Player(QWidget):
@@ -61,7 +62,7 @@ class Player(QWidget):
         self.mute_button.setIcon(QIcon("icons/mute.png"))
         self.mute_button.setIconSize(QSize(24, 24))
         self.mute_button.setToolTip("Mute")
-        # self.mute_button.clicked.connect(self.mute_sound)
+        self.mute_button.clicked.connect(self.mute_sound)
 
         # ####################Volume Slider#################
         self.volume_slider = QSlider(Qt.Horizontal)
@@ -144,6 +145,23 @@ class Player(QWidget):
         self.volume = self.volume_slider.value()
         print(self.volume)
         mixer.music.set_volume(self.volume/100)
+
+    def mute_sound(self):
+        global muted
+
+        if muted == False:
+            mixer.music.set_volume(0.0)
+            muted = True
+            self.mute_button.setIcon(QIcon("icons/unmuted.png"))
+            self.mute_button.setToolTip('UnMute')
+            self.volume_slider.setValue(0)
+
+        else:
+            mixer.music.set_volume(0.7)
+            muted = False
+            self.mute_button.setToolTip('Mute')
+            self.mute_button.setIcon(QIcon("icons/mute.png"))
+            self.volume_slider.setValue(70)
 
 
 def main():
