@@ -55,7 +55,7 @@ class Player(QWidget):
         self.previous_button.setIcon(QIcon("icons/previous.png"))
         self.previous_button.setIconSize(QSize(48, 48))
         self.previous_button.setToolTip("Play Previous")
-        # self.previous_button.clicked.connect(self.play_previous)
+        self.previous_button.clicked.connect(self.play_previous)
 
         self.play_button = QToolButton()
         self.play_button.setIcon(QIcon("icons/play.png"))
@@ -67,7 +67,7 @@ class Player(QWidget):
         self.next_button.setIcon(QIcon("icons/next.png"))
         self.next_button.setIconSize(QSize(48, 48))
         self.next_button.setToolTip("Play Next")
-        # self.next_button.clicked.connect(self.play_next)
+        self.next_button.clicked.connect(self.play_next)
 
         self.mute_button = QToolButton()
         self.mute_button.setIcon(QIcon("icons/mute.png"))
@@ -170,6 +170,62 @@ class Player(QWidget):
             self.song_lenth_label.setText("/ "+str(min)+":"+str(sec))
             self.progress_bar.setValue(0)
             self.progress_bar.setMaximum(song_length)
+
+        except:
+            pass
+
+    def play_previous(self):
+        global song_length
+        global count
+        global index
+        count = 0
+        items = self.play_list.count()
+
+        if index == 0:
+            index = items
+        index -= 1
+
+        try:
+            mixer.music.load(str(music_list[index]))
+            mixer.music.play()
+            self.timer.start()
+            sound = MP3(str(music_list[index]))
+            song_length = sound.info.length
+            song_length = round(song_length)
+            print(song_length)
+            min, sec = divmod(song_length, 60)
+
+            self.song_lenth_label.setText("/ " + str(min) + ":" + str(sec))
+            self.progressBar.setValue(0)
+            self.progressBar.setMaximum(song_length)
+
+        except:
+            pass
+
+    def play_next(self):
+        global song_length
+        global count
+        global index
+        count = 0
+        items = self.play_list.count()
+        index += 1
+
+        if index == items:
+            index = 0
+
+        try:
+            mixer.music.load(str(music_list[index]))
+            mixer.music.play()
+            self.timer.start()
+            sound = MP3(str(music_list[index]))
+            song_length = sound.info.length
+            song_length = round(song_length)
+            print(song_length)
+            min, sec = divmod(song_length, 60)
+
+            self.song_lenth_label.setText("/ " + str(min) + ":" + str(sec))
+            self.progressBar.setValue(0)
+            self.progressBar.setMaximum(song_length)
 
         except:
             pass
