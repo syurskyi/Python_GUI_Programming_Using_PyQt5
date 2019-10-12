@@ -12,7 +12,7 @@ musicList = []
 mixer.init()
 muted = False
 count = 0
-songLengt = 0
+songLength = 0
 index = 0
 
 

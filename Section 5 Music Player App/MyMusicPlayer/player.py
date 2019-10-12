@@ -1,15 +1,20 @@
 import sys
 import os
 import random
+import time
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QSize,Qt,QTimer
 from pygame import mixer
+from mutagen.mp3 import MP3
 
 
 music_list = []
 mixer.init()
 muted = False
+count = 0
+song_length = 0
+index = 0
 
 
 class Player(QWidget):
@@ -27,6 +32,12 @@ class Player(QWidget):
     def widgets(self):
         # ###################################Progress Bar#######################################################
         self.progress_bar = QProgressBar()
+        self.progress_bar.setTextVisible(False)
+
+        # #######################Labels###################
+        self.song_timer_label = QLabel("0:00")
+        self.song_lenth_label = QLabel("/ 0:00")
+
         # ###################################Buttons#######################################################
         self.add_button = QToolButton()
         self.add_button.setIcon(QIcon("icons/add.png"))
@@ -78,6 +89,12 @@ class Player(QWidget):
         self.play_list.doubleClicked.connect(self.play_sounds)
         # self.playList.setStyleSheet(style.playListStyle()
 
+        # ##################Timer########################
+        self.timer = QTimer()
+        self.timer.setInterval(1000)
+        self.timer.timeout.connect(self.update_progress_bar)
+
+
     def layouts(self):
         # ###################################Creating Layouts#######################################################
         self.main_layout = QVBoxLayout()
@@ -91,6 +108,8 @@ class Player(QWidget):
         # ###################################Adding Widgets#######################################################
         # ###################################Top Layouts Widgets##################################################
         self.top_layout.addWidget(self.progress_bar)
+        self.top_layout.addWidget(self.song_timer_label)
+        self.top_layout.addWidget(self.song_lenth_label)
 
         # #################Middle layout Widget#################
         self.middle_layout.addStretch()
@@ -130,6 +149,10 @@ class Player(QWidget):
             self.play_list.addItem(filename)
 
     def play_sounds(self):
+        global song_length
+        global count
+        global index
+        count = 0
         index = self.play_list.currentRow()
         print(index)
         print(music_list[index])
@@ -137,6 +160,16 @@ class Player(QWidget):
         try:
             mixer.music.load(str(music_list[index]))
             mixer.music.play()
+            self.timer.start()
+            sound = MP3(str(music_list[index]))
+            song_length = sound.info.length
+            song_length = round(song_length)
+            print(song_length)
+            min, sec = divmod(song_length, 60)
+
+            self.song_lenth_label.setText("/ "+str(min)+":"+str(sec))
+            self.progress_bar.setValue(0)
+            self.progress_bar.setMaximum(song_length)
 
         except:
             pass
@@ -162,6 +195,16 @@ class Player(QWidget):
             self.mute_button.setToolTip('Mute')
             self.mute_button.setIcon(QIcon("icons/mute.png"))
             self.volume_slider.setValue(70)
+
+    def update_progress_bar(self):
+        global count
+        global song_lenth
+        count += 1
+        self.progress_bar.setValue(count)
+        self.song_timer_label.setText(time.strftime("%M:%S", time.gmtime(count)))
+        if count == song_length:
+            self.timer.stop()
+
 
 
 def main():
