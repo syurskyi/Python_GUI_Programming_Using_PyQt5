@@ -7,7 +7,7 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QSize, Qt, QTimer
 from pygame import mixer
 from mutagen.mp3 import MP3
-
+import style
 
 music_list = []
 mixer.init()
@@ -33,6 +33,7 @@ class Player(QWidget):
         # ###################################Progress Bar#######################################################
         self.progress_bar = QProgressBar()
         self.progress_bar.setTextVisible(False)
+        self.progress_bar.setStyleSheet(style.progress_bar_style())
 
         # #######################Labels###################
         self.song_timer_label = QLabel("0:00")
@@ -87,20 +88,19 @@ class Player(QWidget):
         # ##################Play List####################
         self.play_list = QListWidget()
         self.play_list.doubleClicked.connect(self.play_sounds)
-        # self.playList.setStyleSheet(style.playListStyle()
+        self.play_list.setStyleSheet(style.play_list_style())
 
         # ##################Timer########################
         self.timer = QTimer()
         self.timer.setInterval(1000)
         self.timer.timeout.connect(self.update_progress_bar)
 
-
     def layouts(self):
         # ###################################Creating Layouts#######################################################
         self.main_layout = QVBoxLayout()
         self.top_main_layout = QVBoxLayout()
         self.top_groupbox = QGroupBox('Music Player')
-        self.top_groupbox.setStyleSheet('background-color:#fcc324')
+        self.top_groupbox.setStyleSheet(style.groupbox_style())
         self.top_layout = QHBoxLayout()
         self.middle_layout = QHBoxLayout()
         self.bottom_layout = QVBoxLayout()
