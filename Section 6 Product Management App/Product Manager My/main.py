@@ -79,6 +79,24 @@ class Main(QMainWindow):
         self.not_available_products = QRadioButton('Not Available')
         self.list_button = QPushButton('List')
 
+        # #######################Tab2 Widgets#########################
+        self.members_table = QTableWidget()
+        self.members_table.setColumnCount(4)
+        self.members_table.setHorizontalHeaderItem(0, QTableWidgetItem("Member ID"))
+        self.members_table.setHorizontalHeaderItem(1, QTableWidgetItem("Member Name"))
+        self.members_table.setHorizontalHeaderItem(2, QTableWidgetItem("Member Surname"))
+        self.members_table.setHorizontalHeaderItem(3, QTableWidgetItem("Phone"))
+        self.members_table.horizontalHeader().setSectionResizeMode(1, QHeaderView.Stretch)
+        self.members_table.horizontalHeader().setSectionResizeMode(2, QHeaderView.Stretch)
+        self.members_table.horizontalHeader().setSectionResizeMode(3, QHeaderView.Stretch)
+
+        self.member_search_text = QLabel("Search Members")
+        self.member_search_entry = QLineEdit()
+        self.member_search_button = QPushButton("Search")
+        # self.member_search_button.clicked.connect(self.searchMembers)
+
+        # #########################Tab3 widgets#####################
+
     def layouts(self):
         # #####################Tab1 layouts##############
         self.main_layout = QHBoxLayout()
@@ -109,6 +127,24 @@ class Main(QMainWindow):
         self.main_right_layout.addWidget(self.middle_groupbox, 20)
         self.main_layout.addLayout(self.main_right_layout, 30)
         self.tab1.setLayout(self.main_layout)
+
+        # #####################Tab2 Layouts#####################
+        self.member_main_layout = QHBoxLayout()
+        self.member_left_layout = QHBoxLayout()
+        self.member_right_layout = QHBoxLayout()
+        self.member_right_groupbox = QGroupBox("Search For Members")
+        self.member_right_groupbox.setContentsMargins(10, 10, 10, 500)
+        self.member_right_layout.addWidget(self.member_search_text)
+        self.member_right_layout.addWidget(self.member_search_entry)
+        self.member_right_layout.addWidget(self.member_search_button)
+        self.member_right_groupbox.setLayout(self.member_right_layout)
+
+        self.member_left_layout.addWidget(self.members_table)
+        self.member_main_layout.addLayout(self.member_left_layout, 70)
+        self.member_main_layout.addWidget(self.member_right_groupbox, 30)
+        self.tab2.setLayout(self.member_main_layout)
+
+        # ####################Tab3 layouts########################
 
 
 def main():
