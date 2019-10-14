@@ -2,6 +2,10 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import Qt
+import sqlite3
+
+connect = sqlite3.connect('products.db')
+cursor = connect.cursor
 
 
 class Main(QMainWindow):
