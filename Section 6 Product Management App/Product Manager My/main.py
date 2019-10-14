@@ -14,6 +14,7 @@ class Main(QMainWindow):
 
         self.ui()
         self.show()
+        self.layouts()
 
     def ui(self):
         self.toolbar()
@@ -50,6 +51,14 @@ class Main(QMainWindow):
         self.tabs.addTab(self.tab1, "Products")
         self.tabs.addTab(self.tab2, "Members")
         self.tabs.addTab(self.tab3, "Statistics")
+
+    def layouts(self):
+        self.main_layout = QHBoxLayout()
+        self.main_left_layout = QVBoxLayout()
+        self.main_right_layout = QVBoxLayout()
+        self.right_top_layout = QHBoxLayout()
+        self.right_middle_layout = QHBoxLayout()
+        self.top_groupbox = QGroupBox()
 
 
 def main():
