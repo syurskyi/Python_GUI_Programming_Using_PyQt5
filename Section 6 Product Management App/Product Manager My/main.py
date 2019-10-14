@@ -17,6 +17,7 @@ class Main(QMainWindow):
 
     def ui(self):
         self.toolbar()
+        self.tab_widget()
 
     def toolbar(self):
         self.tb = self.addToolBar("Tool Bar")
@@ -39,9 +40,20 @@ class Main(QMainWindow):
         # self.sellProduct.triggered.connect(self.funcSellProducts)
         self.tb.addSeparator()
 
+    def tab_widget(self):
+        self.tabs = QTabWidget()
+        # self.tabs.blockSignals(True)
+        self.setCentralWidget(self.tabs)
+        self.tab1 = QWidget()
+        self.tab2 = QWidget()
+        self.tab3 = QWidget()
+        self.tabs.addTab(self.tab1, "Products")
+        self.tabs.addTab(self.tab2, "Members")
+        self.tabs.addTab(self.tab3, "Statistics")
+
 
 def main():
-    App=QApplication(sys.argv)
+    App = QApplication(sys.argv)
     window = Main()
     sys.exit(App.exec_())
 
