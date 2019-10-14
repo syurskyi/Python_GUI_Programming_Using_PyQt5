@@ -14,11 +14,12 @@ class Main(QMainWindow):
 
         self.ui()
         self.show()
-        self.layouts()
 
     def ui(self):
         self.toolbar()
         self.tab_widget()
+        self.widgets()
+        self.layouts()
 
     def toolbar(self):
         self.tb = self.addToolBar("Tool Bar")
@@ -52,6 +53,21 @@ class Main(QMainWindow):
         self.tabs.addTab(self.tab2, "Members")
         self.tabs.addTab(self.tab3, "Statistics")
 
+    def widgets(self):
+        # ######################Tab1 Widgets###############
+        # ####################Main left layout widget######
+        self.products_table = QTableWidget()
+        self.products_table.setColumnCount(6)
+        self.products_table.setColumnHidden(0, True)
+        self.products_table.setHorizontalHeaderItem(0, QTableWidgetItem("Product Id"))
+        self.products_table.setHorizontalHeaderItem(1, QTableWidgetItem("Product Name"))
+        self.products_table.setHorizontalHeaderItem(2, QTableWidgetItem("Manufacturer"))
+        self.products_table.setHorizontalHeaderItem(3, QTableWidgetItem("Price"))
+        self.products_table.setHorizontalHeaderItem(4, QTableWidgetItem("Qouta"))
+        self.products_table.setHorizontalHeaderItem(5, QTableWidgetItem("Availbility"))
+        self.products_table.horizontalHeader().setSectionResizeMode(1, QHeaderView.Stretch)
+        self.products_table.horizontalHeader().setSectionResizeMode(2, QHeaderView.Stretch)
+
     def layouts(self):
         self.main_layout = QHBoxLayout()
         self.main_left_layout = QVBoxLayout()
@@ -59,6 +75,11 @@ class Main(QMainWindow):
         self.right_top_layout = QHBoxLayout()
         self.right_middle_layout = QHBoxLayout()
         self.top_groupbox = QGroupBox()
+        # ################Add widgets###################
+        # ###############Left main layout widget###########
+        self.main_left_layout.addWidget(self.products_table)
+        self.main_layout.addLayout(self.main_left_layout)
+        self.tab1.setLayout(self.main_layout)
 
 
 def main():
