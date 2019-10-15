@@ -10,6 +10,7 @@ from PIL import Image
 connect = sqlite3.connect('products.db')
 cursor = connect.cursor
 
+
 class AddProduct(QWidget):
     def __init__(self):
         super().__init__()
@@ -25,10 +26,11 @@ class AddProduct(QWidget):
         self.layouts()
 
     def widgets(self):
+
         # ##################widgets of top layout##########
         self.add_product_image = QLabel()
         self.image = QPixmap('icons/addproduct.png')
-        self.add_product_image.setPixmap(self.img)
+        self.add_product_image.setPixmap(self.image)
         self.title_text = QLabel("Add Product")
         # ################widgets of bottom layot###########
         self.name_entry = QLineEdit()
@@ -41,11 +43,32 @@ class AddProduct(QWidget):
         self.qouta_entry.setPlaceholderText("Enter qouta of product")
         self.upload_button = QPushButton("Upload")
         # self.upload_button.clicked.connect(self.upload_image)
-        self.submitBtn = QPushButton("Submit")
-        self.submitBtn.clicked.connect(self.addProduct)
+        self.submit_button = QPushButton("Submit")
+        # self.submit_button.clicked.connect(self.add_product)
 
     def layouts(self):
-        pass
+        self.main_layout = QVBoxLayout()
+        self.top_layout = QHBoxLayout()
+        self.bottom_layout = QFormLayout()
+        self.top_frame = QFrame()
+        self.bottom_frame = QFrame()
+        # #################add widgets###################
+        # ##########widgets of toplayout##############
+        self.top_layout.addWidget(self.add_product_image)
+        self.top_layout.addWidget(self.title_text)
+        self.top_frame.setLayout(self.top_layout)
+        # # ##############Widgets of form layout##########
+        self.bottom_layout.addRow(QLabel("Name: "), self.name_entry)
+        self.bottom_layout.addRow(QLabel("Manufacturer: "), self.manufacturer_entry)
+        self.bottom_layout.addRow(QLabel("Price: "), self.price_entry)
+        self.bottom_layout.addRow(QLabel("Qouta: "), self.qouta_entry)
+        self.bottom_layout.addRow(QLabel("Upload: "), self.upload_button)
+        self.bottom_layout.addRow(QLabel(""), self.submit_button)
+        self.bottom_frame.setLayout(self.bottom_layout)
+        #
+        self.main_layout.addWidget(self.top_frame)
+        self.main_layout.addWidget(self.bottom_frame)
+        self.setLayout(self.main_layout)
 
     def upload_image(self):
         pass
