@@ -10,6 +10,8 @@ from PIL import Image
 connect = sqlite3.connect('products.db')
 cursor = connect.cursor
 
+default_image = 'store.png'
+
 
 class AddProduct(QWidget):
     def __init__(self):
@@ -27,7 +29,7 @@ class AddProduct(QWidget):
 
     def widgets(self):
 
-        # ##################widgets of top layout##########
+        # ##################widgets of top layout###########
         self.add_product_image = QLabel()
         self.image = QPixmap('icons/addproduct.png')
         self.add_product_image.setPixmap(self.image)
@@ -42,7 +44,7 @@ class AddProduct(QWidget):
         self.qouta_entry = QLineEdit()
         self.qouta_entry.setPlaceholderText("Enter qouta of product")
         self.upload_button = QPushButton("Upload")
-        # self.upload_button.clicked.connect(self.upload_image)
+        self.upload_button.clicked.connect(self.upload_image)
         self.submit_button = QPushButton("Submit")
         # self.submit_button.clicked.connect(self.add_product)
 
@@ -71,7 +73,16 @@ class AddProduct(QWidget):
         self.setLayout(self.main_layout)
 
     def upload_image(self):
-        pass
+        global default_image
+        size = (256, 256)
+        self.filename, ok = QFileDialog.getOpenFileName(self, 'Upload Image', '', 'Image Files (*.jpg *.png)')
+        if ok:
+            print(self.filename)
+            default_image = os.path.basename(self.filename)
+            print(default_image)
+            image = Image.open(self.filename)
+            image = image.resize(size)
+            image.save("img/{0}".format(default_image))
 
     def add_product(self):
         pass
