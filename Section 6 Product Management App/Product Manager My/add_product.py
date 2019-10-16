@@ -46,7 +46,7 @@ class AddProduct(QWidget):
         self.upload_button = QPushButton("Upload")
         self.upload_button.clicked.connect(self.upload_image)
         self.submit_button = QPushButton("Submit")
-        # self.submit_button.clicked.connect(self.add_product)
+        self.submit_button.clicked.connect(self.add_product)
 
     def layouts(self):
         self.main_layout = QVBoxLayout()
@@ -85,4 +85,22 @@ class AddProduct(QWidget):
             image.save("img/{0}".format(default_image))
 
     def add_product(self):
-        pass
+        global default_image
+        name = self.name_entry.text()
+        manufacturer = self.manufacturer_entry.text()
+        price = self.price_entry.text()
+        qouta = self.qouta_entry.text()
+
+        if (name and manufacturer and price and qouta != ''):
+            try:
+                query = "INSERT INTO 'products' (product_name, product_manufacturer, product_price, product_qouta, " \
+                        "product_image) VALUES(?, ?, ?, ?, ?)"
+                cursor.execute(query, (name, manufacturer, price, qouta, default_image))
+                connect.commit()
+                QMessageBox.information(self, "Info", "Product has been added")
+
+            except:
+                QMessageBox.information(self, "Info", "Product has not been added")
+
+        else:
+            QMessageBox.information(self, "Info", "Fields cant be empty!!!")

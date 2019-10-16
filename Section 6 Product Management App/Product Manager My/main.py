@@ -156,8 +156,6 @@ class Main(QMainWindow):
         self.new_product = add_product.AddProduct()
 
 
-
-
 def main():
     App = QApplication(sys.argv)
     window = Main()
